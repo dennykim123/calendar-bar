@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calendar Bar — a simple calendar for your Mac menu bar</title>
+<meta name="description" content="Click the date. See the month. A simple, native monthly calendar for your Mac menu bar. No events, accounts, or distractions.">
+<meta property="og:title" content="Calendar Bar">
+<meta property="og:description" content="Click the date. See the month. A simple, native monthly calendar for your Mac menu bar.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='23' rx='5' fill='white'/%3E%3Cpath d='M4 10a5 5 0 0 1 5-5h14a5 5 0 0 1 5 5v1H4z' fill='%23ff3b30'/%3E%3Ctext x='16' y='24' font-size='14' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23111'%3E24%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f5f5f7;
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --border: #d2d2d7;
+    --accent: #ff3b30;
+    --radius: 18px;
+    --maxw: 980px;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --surface: #141416;
+      --text: #f5f5f7;
+      --muted: #98989d;
+      --border: #2a2a2d;
+      --accent: #ff453a;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* Top bar */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 600; letter-spacing: -0.01em; }
+  .mark {
+    width: 22px; height: 22px; border-radius: 6px; background: #fff;
+    border: 1px solid rgba(0,0,0,.12); position: relative; overflow: hidden; flex: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  }
+  .mark::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 34%; background: var(--accent); }
+  .mark::after { content: "24"; position: absolute; inset: 34% 0 0 0; display: grid; place-items: center;
+    font: 700 10px/1 var(--font); color: #111; }
+  .nav .cta-sm { font-size: 14px; color: var(--accent); font-weight: 500; }
+
+  /* Hero — always dark for a premium product shot */
+  .hero {
+    background: radial-gradient(120% 80% at 50% -10%, #1b1b1f 0%, #000 60%);
+    color: #f5f5f7; text-align: center;
+    padding: 92px 24px 0; position: relative;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 7vw, 68px); font-weight: 600; letter-spacing: -0.035em;
+    line-height: 1.04; margin: 0 auto 18px; max-width: 12ch;
+  }
+  .hero p.lead {
+    font-size: clamp(17px, 2.4vw, 21px); color: #b5b5bb; max-width: 46ch; margin: 0 auto 30px;
+  }
+  .actions { display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff; font-weight: 600; font-size: 16px;
+    padding: 13px 24px; border-radius: 980px; border: none; cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+    box-shadow: 0 6px 20px rgba(255,59,48,.30);
+  }
+  .btn:hover { transform: translateY(-1px); filter: brightness(1.06); box-shadow: 0 10px 28px rgba(255,59,48,.38); }
+  .req { color: #7d7d83; font-size: 13px; }
+  .hero-shot {
+    margin: 44px auto -60px; max-width: 420px; width: 100%; display: block;
+    border-radius: var(--radius);
+    box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+  }
+
+  /* Sections */
+  section.block { padding: 120px 0 40px; }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 14px; letter-spacing: .02em; margin-bottom: 12px; }
+  h2 { font-size: clamp(28px, 4.5vw, 42px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; }
+  .sub { color: var(--muted); font-size: clamp(16px, 2.2vw, 19px); max-width: 52ch; margin-top: 14px; }
+
+  .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 56px; margin-top: 64px; }
+  .feature h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .feature p { color: var(--muted); font-size: 15px; }
+  .ficon { width: 26px; height: 26px; color: var(--accent); margin-bottom: 14px; }
+
+  .showcase { margin-top: 56px; text-align: center; }
+  .showcase img {
+    width: 100%; max-width: 720px; border-radius: var(--radius);
+    border: 1px solid var(--border); background: var(--surface);
+  }
+
+  /* Final CTA */
+  .final { text-align: center; padding: 120px 24px; }
+  .final h2 { margin-bottom: 26px; }
+
+  footer { border-top: 1px solid var(--border); padding: 34px 0; color: var(--muted); font-size: 13px; }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .foot a { color: var(--muted); }
+  .foot a:hover { color: var(--text); }
+
+  /* Motion — content is visible by default; only hidden once JS can reveal it */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  .hero h1, .hero p.lead, .hero .actions, .hero-shot { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero p.lead { animation-delay: .06s; }
+  .hero .actions { animation-delay: .12s; }
+  .hero-shot { animation-delay: .2s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 700px) {
+    .features { grid-template-columns: 1fr; gap: 34px; }
+    section.block { padding: 88px 0 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand"><span class="mark"></span> Calendar Bar</div>
+    <a class="cta-sm" href="#download">Download</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="wrap">
+    <h1>Click the date.<br>See the month.</h1>
+    <p class="lead">A simple, native monthly calendar for your Mac menu bar. No events, accounts, weather, or distractions — just the calendar.</p>
+    <div class="actions" id="download">
+      <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">
+        Download for macOS
+      </a>
+    </div>
+    <p class="req" style="margin-top:16px">Free · macOS 14 Sonoma or later · Apple Silicon &amp; Intel</p>
+    <img class="hero-shot" src="assets/popover.png" alt="Calendar Bar's monthly calendar popover in the menu bar">
+  </div>
+</div>
+
+<!-- Features -->
+<section class="block">
+  <div class="wrap reveal">
+    <div class="eyebrow">The calendar macOS should have had</div>
+    <h2>Everything you need.<br>Nothing you don't.</h2>
+    <p class="sub">Like the Windows taskbar calendar, but native to your Mac. Click the date in your menu bar and the month is right there.</p>
+
+    <div class="features">
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>
+        <h3>Lives in your menu bar</h3>
+        <p>One click opens the month. Today is highlighted, and navigation is instant — arrows, scroll, trackpad swipe, or keyboard.</p>
+      </div>
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18"/></svg>
+        <h3>Make it yours</h3>
+        <p>Show the date, weekday, or a tear-off calendar icon — in seven shapes and ten colors. Pick your language, too.</p>
+      </div>
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg>
+        <h3>Private by design</h3>
+        <p>No accounts, no analytics, no network. Calendar Bar never asks for your calendars, contacts, or location. Everything stays on your Mac.</p>
+      </div>
+      <div class="feature">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
+        <h3>Fast &amp; native</h3>
+        <p>Built with Swift and AppKit. Under 30&nbsp;MB of memory, no Dock icon, and effectively zero CPU when idle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Showcase -->
+<section class="block">
+  <div class="wrap reveal">
+    <div class="eyebrow">Your menu bar, your style</div>
+    <h2>A little calendar, seven ways.</h2>
+    <div class="showcase">
+      <img src="assets/styles.png" alt="The daily calendar icon in seven styles and different colors">
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<div class="final">
+  <div class="wrap reveal">
+    <h2>Your calendar,<br>one click away.</h2>
+    <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download for macOS</a>
+    <p class="req" style="margin-top:16px; color: var(--muted)">Free · macOS 14 Sonoma or later</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 supersalt studio</span>
+    <span>Calendar Bar 1.0 · <a href="https://github.com/dennykim123/calendar-bar/releases">Releases</a></span>
+  </div>
+</footer>
+
+<script>
+  // Progressive enhancement: only hide-then-reveal when JS is available, and
+  // always fall back to visible so content never gets stuck hidden.
+  document.documentElement.classList.add('js');
+  const reveals = document.querySelectorAll('.reveal');
+  const revealAll = () => reveals.forEach(el => el.classList.add('in'));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+    reveals.forEach(el => io.observe(el));
+    // Safety net: reveal anything still hidden shortly after load.
+    setTimeout(revealAll, 1400);
+  } else {
+    revealAll();
+  }
+</script>
+</body>
+</html>
