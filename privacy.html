@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Calendar Bar</title>
+<meta name="description" content="Calendar Bar collects no personal data. This page explains exactly what the app and this website do and don't do.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='23' rx='6' fill='white'/%3E%3Cpath d='M4 11a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v0H4z' fill='%23e5433c'/%3E%3Ctext x='16' y='25' font-size='14' font-family='Arial' font-weight='800' text-anchor='middle' fill='%2326241f'%3E24%3C/text%3E%3C/svg%3E">
+<script>
+  (function () {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  })();
+</script>
+<style>
+  :root {
+    --paper: #f8f7f5; --card: #ffffff; --ink: #26241f; --muted: #8c877e;
+    --faint: #b3aea5; --line: #e6e3dd; --accent: #e5433c; --maxw: 680px;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #171614; --card: #1f1e1b; --ink: #ecebe7; --muted: #9b968d;
+      --faint: #6f6a62; --line: #2c2a26; --accent: #ff5d55;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #171614; --card: #1f1e1b; --ink: #ecebe7; --muted: #9b968d;
+    --faint: #6f6a62; --line: #2c2a26; --accent: #ff5d55;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.65; }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .micro { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+
+  header { border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; height: 56px; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 600; text-decoration: none; }
+  .mark { width: 19px; height: 16px; border-radius: 4px; background: #fff; flex: none; position: relative;
+    overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.10); }
+  .mark::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 38%; background: var(--accent); }
+  .mark::after { content: "24"; position: absolute; inset: 38% 0 0 0; display: grid; place-items: center;
+    font: 700 8px/1 var(--sans); color: #26241f; }
+
+  h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.025em; margin: 64px 0 6px; }
+  h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.012em; margin: 34px 0 8px; }
+  p, li { color: var(--muted); }
+  p { margin-bottom: 10px; }
+  ul { margin: 0 0 10px 20px; }
+  li { margin-bottom: 4px; }
+  strong { color: var(--ink); font-weight: 600; }
+  .lede { color: var(--ink); font-size: 16px; margin: 14px 0 6px; }
+  footer { border-top: 1px solid var(--line); margin-top: 64px; padding: 24px 0 44px; }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .foot a { color: var(--muted); text-decoration: none; }
+  .foot a:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav"><a class="brand" href="./"><span class="mark"></span> Calendar Bar</a></div>
+</header>
+
+<div class="wrap">
+  <h1>Privacy Policy</h1>
+  <p class="micro">Last updated 25 July 2026</p>
+
+  <p class="lede">Calendar Bar collects nothing. There is no account, no analytics,
+    and the app makes no network requests at all.</p>
+
+  <h2>The app</h2>
+  <p>Calendar Bar runs entirely on your Mac. Specifically, it:</p>
+  <ul>
+    <li>makes <strong>no network requests</strong> — it has no server to talk to;</li>
+    <li>has <strong>no accounts and no sign-in</strong>;</li>
+    <li>contains <strong>no analytics, telemetry, crash reporting, or advertising</strong> code;</li>
+    <li>never requests access to your <strong>calendars, contacts, location, photos,
+        microphone, or camera</strong>.</li>
+  </ul>
+  <p>Your preferences (menu bar format, icon shape, highlight colour, language,
+    appearance, first day of week) are stored locally in macOS user defaults and
+    never leave your Mac. A supporter code, if you enter one, is verified locally
+    on your Mac — it is not sent anywhere.</p>
+
+  <h2>This website</h2>
+  <p>This site is a set of static pages hosted on <strong>GitHub Pages</strong>.
+    It sets no cookies and runs no analytics. One preference — your light/dark
+    choice — is kept in your browser's local storage and is never transmitted.
+    As with any web host, GitHub processes standard server request data (such as
+    IP address) to deliver the pages; see GitHub's own privacy statement for
+    details. Downloads are served from GitHub Releases.</p>
+
+  <h2>Supporting the app</h2>
+  <p>Supporting Calendar Bar is entirely optional. If you pay by card, the
+    transaction is handled by <strong>Paddle.com Market Limited</strong> as the
+    merchant of record; Paddle receives your payment and billing details under its
+    own privacy policy, and we only see what is needed to send you a supporter
+    code (your email address and the fact that a purchase was made). If you send
+    a gift card by email, we receive only the email you send.</p>
+
+  <h2>Email</h2>
+  <p>If you write to us, we keep your message so we can reply. We do not add you
+    to any mailing list, and there is none to add you to.</p>
+
+  <h2>Children</h2>
+  <p>Calendar Bar is a general-purpose utility and is not directed at children.
+    Because it collects no data, it collects none from children either.</p>
+
+  <h2>Your rights</h2>
+  <p>We hold no personal data about you beyond any email you have sent us. If you
+    would like that correspondence deleted, ask and it will be deleted.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes, the updated date at the top of this page changes with
+    it. Material changes will be noted on this page.</p>
+
+  <h2>Contact</h2>
+  <p>supersalt studio — <a href="mailto:bluepisode@naver.com">bluepisode@naver.com</a></p>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span class="micro">© 2026 supersalt studio</span>
+    <span class="micro"><a href="./">Home</a> · <a href="terms.html">Terms</a> · <a href="support.html">Support</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Use — Calendar Bar</title>
+<meta name="description" content="Terms of use for the Calendar Bar app, this website, and optional supporter contributions.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='23' rx='6' fill='white'/%3E%3Cpath d='M4 11a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v0H4z' fill='%23e5433c'/%3E%3Ctext x='16' y='25' font-size='14' font-family='Arial' font-weight='800' text-anchor='middle' fill='%2326241f'%3E24%3C/text%3E%3C/svg%3E">
+<script>
+  (function () {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  })();
+</script>
+<style>
+  :root {
+    --paper: #f8f7f5; --card: #ffffff; --ink: #26241f; --muted: #8c877e;
+    --faint: #b3aea5; --line: #e6e3dd; --accent: #e5433c; --maxw: 680px;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #171614; --card: #1f1e1b; --ink: #ecebe7; --muted: #9b968d;
+      --faint: #6f6a62; --line: #2c2a26; --accent: #ff5d55;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #171614; --card: #1f1e1b; --ink: #ecebe7; --muted: #9b968d;
+    --faint: #6f6a62; --line: #2c2a26; --accent: #ff5d55;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.65; }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .micro { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+
+  header { border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; height: 56px; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 600; text-decoration: none; }
+  .mark { width: 19px; height: 16px; border-radius: 4px; background: #fff; flex: none; position: relative;
+    overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.10); }
+  .mark::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 38%; background: var(--accent); }
+  .mark::after { content: "24"; position: absolute; inset: 38% 0 0 0; display: grid; place-items: center;
+    font: 700 8px/1 var(--sans); color: #26241f; }
+
+  h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.025em; margin: 64px 0 6px; }
+  h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.012em; margin: 34px 0 8px; }
+  p, li { color: var(--muted); }
+  p { margin-bottom: 10px; }
+  ul { margin: 0 0 10px 20px; }
+  li { margin-bottom: 4px; }
+  strong { color: var(--ink); font-weight: 600; }
+  .lede { color: var(--ink); font-size: 16px; margin: 14px 0 6px; }
+  footer { border-top: 1px solid var(--line); margin-top: 64px; padding: 24px 0 44px; }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .foot a { color: var(--muted); text-decoration: none; }
+  .foot a:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav"><a class="brand" href="./"><span class="mark"></span> Calendar Bar</a></div>
+</header>
+
+<div class="wrap">
+  <h1>Terms of Use</h1>
+  <p class="micro">Last updated 25 July 2026</p>
+
+  <p class="lede">Calendar Bar is a free macOS utility from supersalt studio.
+    Downloading or using it means you accept these terms.</p>
+
+  <h2>The app</h2>
+  <p>Calendar Bar is provided free of charge for personal and commercial use on
+    your own Macs. You may not resell it, redistribute modified copies, or present
+    it as your own product. The software and its name remain the property of
+    supersalt studio.</p>
+
+  <h2>Supporter contributions</h2>
+  <p>Supporting Calendar Bar is <strong>entirely optional</strong>. Everything the
+    app does is available without paying, and nothing that ships by default is
+    locked behind a payment. A contribution is recognition, not a purchase of
+    functionality; in return you may receive cosmetic extras, such as additional
+    highlight colours and an optional marker in the menu bar, plus early builds and
+    a place in the supporters list.</p>
+  <p>Card payments are sold and fulfilled by <strong>Paddle.com Market Limited</strong>
+    as the merchant of record. Paddle's own terms and refund policy apply to the
+    transaction, and Paddle issues the receipt. If you would like a refund, contact
+    Paddle or write to us and we will help.</p>
+  <p>Supporter codes are for your personal use. They are checked offline on your
+    Mac and are not a licence key for the software itself, which is free regardless.</p>
+
+  <h2>No warranty</h2>
+  <p>Calendar Bar is provided “as is”, without warranty of any kind. We cannot
+    promise it will be free of defects or suit a particular purpose. To the extent
+    permitted by law, supersalt studio is not liable for any loss arising from use
+    of the app — though if something is broken, please tell us and we will try to
+    fix it.</p>
+
+  <h2>Availability and changes</h2>
+  <p>We may change, update, or discontinue Calendar Bar or this website at any
+    time. Copies you have already downloaded keep working; the app needs no server.</p>
+
+  <h2>Governing law</h2>
+  <p>These terms are governed by the laws of the Republic of Korea. Nothing here
+    limits any statutory consumer rights you may have.</p>
+
+  <h2>Contact</h2>
+  <p>supersalt studio — <a href="mailto:bluepisode@naver.com">bluepisode@naver.com</a></p>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span class="micro">© 2026 supersalt studio</span>
+    <span class="micro"><a href="./">Home</a> · <a href="privacy.html">Privacy</a> · <a href="support.html">Support</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
