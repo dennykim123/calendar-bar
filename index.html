@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendar Bar — a tiny calendar for your Mac menu bar</title>
-<meta name="description" content="Click the date. See the month. A tiny, native monthly calendar that lives in your Mac menu bar. No events, no accounts, no network.">
+<title>Calendar Bar — a minimal calendar for your Mac menu bar</title>
+<meta name="description" content="Click the date. See the month. A minimal, native monthly calendar for your Mac menu bar. No events, no accounts, no network — for people who keep their menu bar clean.">
 <meta property="og:title" content="Calendar Bar">
-<meta property="og:description" content="Click the date. See the month. A tiny, native calendar for your Mac menu bar.">
+<meta property="og:description" content="Click the date. See the month. A minimal, native calendar for your Mac menu bar.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='23' rx='6' fill='white'/%3E%3Cpath d='M4 11a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v0H4z' fill='%23e5433c'/%3E%3Ctext x='16' y='25' font-size='14' font-family='Arial' font-weight='800' text-anchor='middle' fill='%2326241f'%3E24%3C/text%3E%3C/svg%3E">
 <style>
   :root {
@@ -118,6 +118,14 @@
   .legend span { color: var(--muted); font-size: 13.5px; }
   .legend b { color: var(--ink); font-weight: 600; }
 
+  /* Omissions — non-goals, stated plainly */
+  .omit { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .omit span {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .02em; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; background: var(--card);
+  }
+  .omit span s { color: var(--faint); text-decoration-thickness: 1px; }
+
   /* Closing */
   .close { text-align: center; padding: 96px 0 88px; border-top: 1px solid var(--line); }
   .close h2 { max-width: 18ch; margin: 10px auto 22px; }
@@ -163,9 +171,9 @@
 
 <div class="hero">
   <div class="wrap">
-    <p class="micro">Menu bar utility · macOS</p>
+    <p class="micro">Minimal menu bar calendar · macOS</p>
     <h1>Click the date.<br>See the month.</h1>
-    <p class="lead">A tiny, native monthly calendar that lives in your menu bar. No events, no accounts, no network.</p>
+    <p class="lead">A minimal, native monthly calendar for people who keep their menu bar clean. No events, no accounts, no network.</p>
     <div class="actions" id="download">
       <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download for macOS</a>
     </div>
@@ -221,8 +229,9 @@
 
 <section style="padding-top:0">
   <div class="wrap reveal">
-    <p class="micro">Menu bar styles</p>
-    <h2>Seven ways to show a date.</h2>
+    <p class="micro">How much it shows</p>
+    <h2>Show as little as you like.</h2>
+    <p class="sectionsub">By default it's a single number. Add the weekday or month, or swap in a small calendar icon — then forget about it.</p>
     <div class="showcase">
       <img src="assets/styles.png?v=3" alt="The daily calendar icon drawn in seven styles">
     </div>
@@ -233,6 +242,30 @@
       <span><b>Weekday</b> left or right</span>
       <span><b>Torn</b> page</span>
       <span><b>Peek</b> stack</span>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap reveal">
+    <p class="micro">Deliberately missing</p>
+    <h2>What it doesn't do.</h2>
+    <p class="sectionsub">Every one of these was considered and left out. The question was always the same: does it make checking the month faster?</p>
+    <div class="omit">
+      <span><s>event lists</s></span>
+      <span><s>calendar sync</s></span>
+      <span><s>accounts</s></span>
+      <span><s>reminders</s></span>
+      <span><s>notifications</s></span>
+      <span><s>weather</s></span>
+      <span><s>to-dos</s></span>
+      <span><s>AI</s></span>
+      <span><s>widgets</s></span>
+      <span><s>analytics</s></span>
+      <span><s>ads</s></span>
+      <span><s>dock icon</s></span>
+      <span><s>week numbers</s></span>
+      <span><s>subscriptions</s></span>
     </div>
   </div>
 </section>
