@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calendar Bar — a cute little calendar for your Mac menu bar</title>
-<meta name="description" content="Click the date. See the month. A simple, cute calendar for your Mac menu bar. メニューバーに、ちいさなカレンダー。">
+<meta name="description" content="Click the date. See the month. A simple, cute little calendar that lives in your Mac menu bar.">
 <meta property="og:title" content="Calendar Bar">
-<meta property="og:description" content="メニューバーに、ちいさなカレンダー。A cute little calendar for your Mac menu bar.">
+<meta property="og:description" content="Click the date. See the month. A cute little calendar for your Mac menu bar.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='23' rx='7' fill='white'/%3E%3Cpath d='M4 12a7 7 0 0 1 7-7h10a7 7 0 0 1 7 7v0H4z' fill='%23ff6b9d'/%3E%3Ctext x='16' y='25' font-size='14' font-family='Arial' font-weight='800' text-anchor='middle' fill='%23444'%3E24%3C/text%3E%3C/svg%3E">
 <style>
   :root {
@@ -24,8 +24,7 @@
     --radius: 26px;
     --maxw: 1000px;
     --font: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont,
-            "Hiragino Maru Gothic ProN", "Hiragino Maru Gothic Pro", "Quicksand",
-            "Helvetica Neue", sans-serif;
+            "Quicksand", "Helvetica Neue", sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
@@ -89,7 +88,7 @@
     font-size: clamp(40px, 7.5vw, 74px); font-weight: 800; letter-spacing: -0.03em;
     line-height: 1.02; margin: 0 auto 14px; max-width: 13ch; color: #3f3540;
   }
-  .jp { font-size: clamp(16px, 2.6vw, 22px); color: var(--pink); font-weight: 800; margin-bottom: 8px; letter-spacing: .01em; }
+  .tagline { font-size: clamp(16px, 2.6vw, 22px); color: var(--pink); font-weight: 800; margin-bottom: 8px; letter-spacing: .01em; }
   .hero p.lead { font-size: clamp(16px, 2.3vw, 20px); color: var(--muted); max-width: 44ch; margin: 0 auto 28px; font-weight: 600; }
 
   .btn {
@@ -120,7 +119,6 @@
   /* Sections */
   section.block { padding: 96px 0 24px; }
   .eyebrow { color: var(--pink); font-weight: 800; font-size: 14px; margin-bottom: 10px; }
-  .eyebrow .en { color: var(--muted); font-weight: 700; }
   h2 { font-size: clamp(28px, 4.6vw, 44px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; color: #3f3540; }
   .sub { color: var(--muted); font-size: clamp(15px, 2.1vw, 18px); max-width: 52ch; margin-top: 14px; font-weight: 600; }
 
@@ -156,7 +154,7 @@
     box-shadow: 0 26px 60px rgba(255,107,157,.22);
   }
   .final h2 { margin-bottom: 8px; }
-  .final .jp { margin-bottom: 22px; }
+  .final .tagline { margin-bottom: 22px; }
 
   footer { padding: 40px 0 56px; color: var(--muted); font-size: 13px; font-weight: 600; }
   .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
@@ -166,10 +164,10 @@
   @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
   @keyframes twinkle { 0%,100% { opacity: .25; transform: scale(.85) } 50% { opacity: .7; transform: scale(1.1) } }
   @keyframes rise { from { opacity: 0; transform: translateY(22px) } to { opacity: 1; transform: none } }
-  .hero .chip, .hero .jp, .hero h1, .hero p.lead, .hero .actions, .hero .req, .window {
+  .hero .chip, .hero .tagline, .hero h1, .hero p.lead, .hero .actions, .hero .req, .window {
     animation: rise .8s cubic-bezier(.2,.7,.2,1) both;
   }
-  .hero .jp { animation-delay: .05s } .hero h1 { animation-delay: .1s } .hero p.lead { animation-delay: .16s }
+  .hero .tagline { animation-delay: .05s } .hero h1 { animation-delay: .1s } .hero p.lead { animation-delay: .16s }
   .hero .actions { animation-delay: .22s } .hero .req { animation-delay: .26s } .window { animation-delay: .3s }
   .reveal { opacity: 1; }
   .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
@@ -191,7 +189,7 @@
 <header>
   <div class="wrap nav">
     <div class="brand"><span class="mark"></span> Calendar Bar</div>
-    <a class="pill-link" href="#download">ダウンロード</a>
+    <a class="pill-link" href="#download">Download</a>
   </div>
 </header>
 
@@ -204,8 +202,8 @@
   <span class="sparkle" style="top:300px;left:14%;font-size:14px;animation-delay:1.6s">✧</span>
 
   <div class="wrap">
-    <span class="chip">かわいい · カレンダー ✿</span>
-    <p class="jp">メニューバーに、ちいさなカレンダー。</p>
+    <span class="chip">cute · tiny · calendar ✿</span>
+    <p class="tagline">a little calendar for your menu bar ♡</p>
     <h1>Click the date.<br>See the month.</h1>
     <p class="lead">A simple, cute little calendar that lives in your Mac menu bar. No events, no accounts — just tap the date and there's your month. ♡</p>
     <div class="actions" id="download">
@@ -216,7 +214,7 @@
     <p class="req">Free · macOS 14 Sonoma or later · Apple Silicon &amp; Intel</p>
 
     <div class="window">
-      <img src="assets/popover.png" alt="Calendar Bar's monthly calendar popover">
+      <img src="assets/popover.png?v=2" alt="Calendar Bar's monthly calendar popover">
     </div>
   </div>
 </div>
@@ -224,7 +222,7 @@
 <!-- Features -->
 <section class="block">
   <div class="wrap reveal">
-    <div class="eyebrow">とくちょう <span class="en">· what's inside</span></div>
+    <div class="eyebrow">what's inside</div>
     <h2>Everything you need.<br>Nothing you don't.</h2>
     <p class="sub">Like the Windows taskbar calendar, but native — and a lot cuter — on your Mac.</p>
 
@@ -256,7 +254,7 @@
 <!-- Showcase -->
 <section class="block">
   <div class="wrap reveal" style="text-align:center">
-    <div class="eyebrow" style="text-align:center">えらべる アイコン <span class="en">· seven little styles</span></div>
+    <div class="eyebrow" style="text-align:center">seven little styles</div>
     <h2>A little calendar, seven ways.</h2>
     <div class="showcase">
       <div class="frame"><img src="assets/styles.png?v=2" alt="The daily calendar icon in seven cute styles and colors"></div>
@@ -268,7 +266,7 @@
 <div class="final">
   <div class="wrap reveal">
     <div class="final-card">
-      <p class="jp">さぁ、ワンクリックで。</p>
+      <p class="tagline">no setup, no sign-in ♡</p>
       <h2>Your calendar,<br>one click away.</h2>
       <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg"><span class="heart">♥</span> Download for macOS</a>
       <p class="req" style="color:#8a6b78">Free · macOS 14 Sonoma or later</p>
