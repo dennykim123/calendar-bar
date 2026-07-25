@@ -21,11 +21,17 @@
     --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
   }
+  /* Dark tokens apply when the system asks for dark and the visitor hasn't
+     forced light, or when they've explicitly chosen dark. */
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --paper: #171614; --card: #1f1e1b; --ink: #ecebe7; --muted: #9b968d;
       --faint: #6f6a62; --line: #2c2a26; --accent: #ff5d55;
     }
+  }
+  :root[data-theme="dark"] {
+    --paper: #171614; --card: #1f1e1b; --ink: #ecebe7; --muted: #9b968d;
+    --faint: #6f6a62; --line: #2c2a26; --accent: #ff5d55;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-font-smoothing: antialiased; }
@@ -48,7 +54,19 @@
   .mark::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 38%; background: var(--accent); }
   .mark::after { content: "24"; position: absolute; inset: 38% 0 0 0; display: grid; place-items: center;
     font: 700 8px/1 var(--sans); color: #26241f; }
-  .nav .btn { margin-left: auto; }
+  .nav .btn { margin-left: 10px; }
+  .theme {
+    margin-left: auto; width: 30px; height: 30px; border: 1px solid var(--line);
+    border-radius: 999px; background: none; color: var(--muted); cursor: pointer;
+    display: grid; place-items: center; transition: color .15s ease, border-color .15s ease;
+  }
+  .theme:hover { color: var(--ink); border-color: var(--muted); }
+  .theme svg { width: 15px; height: 15px; }
+  .theme .i-light, .theme .i-dark { display: none; }
+  :root[data-theme="light"] .theme .i-system { display: none; }
+  :root[data-theme="light"] .theme .i-light { display: block; }
+  :root[data-theme="dark"] .theme .i-system { display: none; }
+  :root[data-theme="dark"] .theme .i-dark { display: block; }
   .btn {
     display: inline-flex; align-items: center; background: var(--ink); color: var(--paper);
     font-size: 13.5px; font-weight: 600; padding: 8px 17px; border-radius: 999px;
@@ -65,14 +83,24 @@
   .req { margin-top: 12px; }
 
   .shot { margin: 54px auto 0; max-width: 320px; }
-  .shot picture { display: block; }
+  /* Two shots in the markup; CSS shows whichever matches the active theme. */
+  .shot .dark-only { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .shot .light-only { display: none; }
+    :root:not([data-theme="light"]) .shot .dark-only { display: block; }
+  }
+  :root[data-theme="dark"] .shot .light-only { display: none; }
+  :root[data-theme="dark"] .shot .dark-only { display: block; }
+  :root[data-theme="light"] .shot .light-only { display: block; }
+  :root[data-theme="light"] .shot .dark-only { display: none; }
   .shot img {
     width: 100%; display: block; border-radius: 13px; border: 1px solid var(--line);
     box-shadow: 0 12px 30px rgba(38,36,31,.07);
   }
   @media (prefers-color-scheme: dark) {
-    .shot img { box-shadow: 0 12px 30px rgba(0,0,0,.4); }
+    :root:not([data-theme="light"]) .shot img { box-shadow: 0 12px 30px rgba(0,0,0,.4); }
   }
+  :root[data-theme="dark"] .shot img { box-shadow: 0 12px 30px rgba(0,0,0,.4); }
 
   /* Facts */
   .facts {
@@ -95,6 +123,15 @@
 
   .showcase { margin-top: 22px; }
   .showcase img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 12px; }
+  .showcase .dark-only { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .showcase .light-only { display: none; }
+    :root:not([data-theme="light"]) .showcase .dark-only { display: block; }
+  }
+  :root[data-theme="dark"] .showcase .light-only { display: none; }
+  :root[data-theme="dark"] .showcase .dark-only { display: block; }
+  :root[data-theme="light"] .showcase .light-only { display: block; }
+  :root[data-theme="light"] .showcase .dark-only { display: none; }
 
   .omit { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 7px; }
   .omit s {
@@ -121,12 +158,24 @@
     section { padding-top: 60px; }
   }
 </style>
+<script>
+  // Applied before first paint to avoid a flash of the wrong theme.
+  (function () {
+    var t = localStorage.getItem("theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  })();
+</script>
 </head>
 <body>
 
 <header>
   <div class="nav">
     <span class="brand"><span class="mark"></span> Calendar Bar</span>
+    <button class="theme" type="button" title="Appearance: System" aria-label="Change appearance">
+      <svg class="i-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>
+      <svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
+      <svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+    </button>
     <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download</a>
   </div>
 </header>
@@ -141,10 +190,8 @@
     <!-- The shot follows the visitor's appearance, so it matches what they'll
          actually see — the app itself always follows the system. -->
     <div class="shot">
-      <picture>
-        <source srcset="assets/popover-dark.png" media="(prefers-color-scheme: dark)">
-        <img src="assets/popover.png?v=2" alt="The Calendar Bar popover showing a month with today highlighted">
-      </picture>
+      <img class="light-only" src="assets/popover.png?v=2" alt="The Calendar Bar popover showing a month with today highlighted">
+      <img class="dark-only" src="assets/popover-dark.png" alt="" aria-hidden="true">
     </div>
 
     <div class="facts">
@@ -172,7 +219,8 @@
   <div class="wrap">
     <h2>Eight ways to show a date.</h2>
     <div class="showcase">
-      <img src="assets/styles.png?v=4" alt="The daily calendar icon drawn in eight styles">
+      <img class="light-only" src="assets/styles.png?v=4" alt="The daily calendar icon drawn in eight styles">
+      <img class="dark-only" src="assets/styles-dark.png" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
@@ -194,5 +242,26 @@
   </div>
 </footer>
 
+<script>
+  const order = ["system", "light", "dark"];
+  const root = document.documentElement;
+  const button = document.querySelector(".theme");
+
+  const current = () => root.dataset.theme || "system";
+  const label = (t) => "Appearance: " + t[0].toUpperCase() + t.slice(1);
+
+  button.title = label(current());
+  button.addEventListener("click", () => {
+    const next = order[(order.indexOf(current()) + 1) % order.length];
+    if (next === "system") {
+      delete root.dataset.theme;
+      localStorage.removeItem("theme");
+    } else {
+      root.dataset.theme = next;
+      localStorage.setItem("theme", next);
+    }
+    button.title = label(next);
+  });
+</script>
 </body>
 </html>
