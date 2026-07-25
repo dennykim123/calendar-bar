@@ -65,9 +65,13 @@
   .req { margin-top: 12px; }
 
   .shot { margin: 54px auto 0; max-width: 320px; }
+  .shot picture { display: block; }
   .shot img {
     width: 100%; display: block; border-radius: 13px; border: 1px solid var(--line);
     box-shadow: 0 12px 30px rgba(38,36,31,.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    .shot img { box-shadow: 0 12px 30px rgba(0,0,0,.4); }
   }
 
   /* Facts */
@@ -134,8 +138,13 @@
     <a class="btn lg" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download for macOS</a>
     <p class="micro req">Free · macOS 14+ · Signed &amp; notarised by Apple</p>
 
+    <!-- The shot follows the visitor's appearance, so it matches what they'll
+         actually see — the app itself always follows the system. -->
     <div class="shot">
-      <img src="assets/popover.png?v=2" alt="The Calendar Bar popover showing a month with today highlighted">
+      <picture>
+        <source srcset="assets/popover-dark.png" media="(prefers-color-scheme: dark)">
+        <img src="assets/popover.png?v=2" alt="The Calendar Bar popover showing a month with today highlighted">
+      </picture>
     </div>
 
     <div class="facts">
