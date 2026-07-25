@@ -121,17 +121,6 @@
   .row b { font-weight: 600; min-width: 168px; flex: none; }
   .row span { color: var(--muted); }
 
-  .showcase { margin-top: 22px; }
-  .showcase img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 12px; }
-  .showcase .dark-only { display: none; }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .showcase .light-only { display: none; }
-    :root:not([data-theme="light"]) .showcase .dark-only { display: block; }
-  }
-  :root[data-theme="dark"] .showcase .light-only { display: none; }
-  :root[data-theme="dark"] .showcase .dark-only { display: block; }
-  :root[data-theme="light"] .showcase .light-only { display: block; }
-  :root[data-theme="light"] .showcase .dark-only { display: none; }
 
   .omit { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 7px; }
   .omit s {
@@ -211,16 +200,6 @@
       <div class="row"><b>Stays out of the way</b><span>No Dock icon, no notifications, nothing in the background.</span></div>
       <div class="row"><b>Nothing leaves your Mac</b><span>No accounts, no analytics, no network requests.</span></div>
       <div class="row"><b>Yours to set up</b><span>Sixteen icon shapes, thirteen colours, eight languages.</span></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Sixteen ways to show a date.</h2>
-    <div class="showcase">
-      <img class="light-only" src="assets/styles.png?v=5" alt="The daily calendar icon drawn in sixteen styles">
-      <img class="dark-only" src="assets/styles-dark.png?v=5" alt="" aria-hidden="true">
     </div>
   </div>
 </section>
