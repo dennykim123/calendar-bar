@@ -3,281 +3,253 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendar Bar — a cute little calendar for your Mac menu bar</title>
-<meta name="description" content="Click the date. See the month. A simple, cute little calendar that lives in your Mac menu bar.">
+<title>Calendar Bar — a tiny calendar for your Mac menu bar</title>
+<meta name="description" content="Click the date. See the month. A tiny, native monthly calendar that lives in your Mac menu bar. No events, no accounts, no network.">
 <meta property="og:title" content="Calendar Bar">
-<meta property="og:description" content="Click the date. See the month. A cute little calendar for your Mac menu bar.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='23' rx='7' fill='white'/%3E%3Cpath d='M4 12a7 7 0 0 1 7-7h10a7 7 0 0 1 7 7v0H4z' fill='%23ff6b9d'/%3E%3Ctext x='16' y='25' font-size='14' font-family='Arial' font-weight='800' text-anchor='middle' fill='%23444'%3E24%3C/text%3E%3C/svg%3E">
+<meta property="og:description" content="Click the date. See the month. A tiny, native calendar for your Mac menu bar.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='23' rx='6' fill='white'/%3E%3Cpath d='M4 11a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v0H4z' fill='%23e5433c'/%3E%3Ctext x='16' y='25' font-size='14' font-family='Arial' font-weight='800' text-anchor='middle' fill='%2326241f'%3E24%3C/text%3E%3C/svg%3E">
 <style>
   :root {
-    --cream: #fff7f1;
-    --cream2: #fff0f4;
-    --ink: #4a4048;
-    --muted: #a08d95;
-    --pink: #ff6b9d;
-    --pink-soft: #ffd7e4;
-    --mint: #8fe0cf;
-    --peach: #ffdcae;
-    --lav: #d9cdf5;
-    --sky: #bfe3ff;
-    --card: #ffffff;
-    --radius: 26px;
-    --maxw: 1000px;
-    --font: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont,
-            "Quicksand", "Helvetica Neue", sans-serif;
+    --paper:  #f8f7f5;
+    --card:   #ffffff;
+    --ink:    #26241f;
+    --muted:  #8c877e;
+    --faint:  #b3aea5;
+    --line:   #e6e3dd;
+    --accent: #e5433c;
+    --radius: 14px;
+    --maxw:   880px;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #171614; --card: #1f1e1b; --ink: #ecebe7; --muted: #9b968d;
+      --faint: #6f6a62; --line: #2c2a26; --accent: #ff5d55;
+    }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body {
-    font-family: var(--font);
-    color: var(--ink);
-    line-height: 1.55;
-    background: var(--cream);
-    overflow-x: hidden;
+    font-family: var(--sans); background: var(--paper); color: var(--ink);
+    line-height: 1.6; font-size: 15px; overflow-x: hidden;
   }
   a { color: inherit; text-decoration: none; }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  /* micro label — the "small and precise" voice of the page */
+  .micro {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--faint);
+  }
 
   /* Header */
-  header {
-    position: sticky; top: 0; z-index: 20;
-    background: rgba(255,247,241,.75);
-    backdrop-filter: saturate(160%) blur(16px);
-    -webkit-backdrop-filter: saturate(160%) blur(16px);
-  }
-  .nav { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -0.01em; font-size: 17px; }
+  header { border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 20; }
+  .nav { display: flex; align-items: center; gap: 10px; height: 54px; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 600; letter-spacing: -0.01em; }
   .mark {
-    width: 26px; height: 26px; border-radius: 9px; background: #fff;
-    box-shadow: 0 3px 8px rgba(255,107,157,.28), inset 0 0 0 1px rgba(0,0,0,.05);
-    position: relative; overflow: hidden; flex: none; transform: rotate(-4deg);
+    width: 19px; height: 16px; border-radius: 4px; background: #fff; flex: none;
+    position: relative; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.10);
   }
-  .mark::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 38%; background: var(--pink); }
-  .mark::after { content: "24"; position: absolute; inset: 38% 0 0 0; display: grid; place-items: center;
-    font: 800 11px/1 var(--font); color: #5a505a; }
-  .pill-link {
-    background: var(--pink); color: #fff; font-weight: 800; font-size: 14px;
-    padding: 9px 18px; border-radius: 999px; box-shadow: 0 6px 16px rgba(255,107,157,.35);
-    transition: transform .18s cubic-bezier(.34,1.56,.64,1);
+  .mark::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 38%; background: var(--accent); }
+  .mark::after {
+    content: "24"; position: absolute; inset: 38% 0 0 0; display: grid; place-items: center;
+    font: 700 8px/1 var(--sans); color: #26241f;
   }
-  .pill-link:hover { transform: translateY(-2px) scale(1.04); }
+  .nav .spacer { flex: 1; }
+  .textlink { font-size: 14px; color: var(--muted); }
+  .textlink:hover { color: var(--ink); }
 
   /* Hero */
-  .hero { position: relative; text-align: center; padding: 74px 24px 40px; overflow: hidden; }
-  .hero-bg {
-    position: absolute; inset: 0; z-index: -2;
-    background:
-      radial-gradient(60% 50% at 15% 10%, var(--pink-soft) 0%, transparent 60%),
-      radial-gradient(55% 45% at 85% 8%, var(--sky) 0%, transparent 55%),
-      radial-gradient(70% 60% at 50% 110%, var(--mint) 0%, transparent 55%),
-      var(--cream);
-  }
-  .blob { position: absolute; border-radius: 50%; filter: blur(2px); opacity: .8; z-index: -1; }
-  .b1 { width: 90px; height: 90px; background: var(--peach); top: 120px; left: 8%; animation: float 7s ease-in-out infinite; }
-  .b2 { width: 60px; height: 60px; background: var(--lav); top: 200px; right: 10%; animation: float 6s ease-in-out infinite .6s; }
-  .b3 { width: 44px; height: 44px; background: var(--mint); top: 90px; right: 22%; animation: float 8s ease-in-out infinite .3s; }
-  .sparkle { position: absolute; z-index: -1; color: var(--pink); opacity: .55; animation: twinkle 3.5s ease-in-out infinite; }
-
-  .chip {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: #fff; color: var(--pink); font-weight: 800; font-size: 13.5px;
-    padding: 7px 15px; border-radius: 999px; margin-bottom: 22px;
-    box-shadow: 0 6px 18px rgba(255,107,157,.18);
-  }
+  .hero { padding: 86px 0 0; text-align: center; }
   .hero h1 {
-    font-size: clamp(40px, 7.5vw, 74px); font-weight: 800; letter-spacing: -0.03em;
-    line-height: 1.02; margin: 0 auto 14px; max-width: 13ch; color: #3f3540;
+    font-size: clamp(30px, 5.2vw, 46px); font-weight: 600; letter-spacing: -0.032em;
+    line-height: 1.08; margin: 14px auto 16px; max-width: 15ch;
   }
-  .tagline { font-size: clamp(16px, 2.6vw, 22px); color: var(--pink); font-weight: 800; margin-bottom: 8px; letter-spacing: .01em; }
-  .hero p.lead { font-size: clamp(16px, 2.3vw, 20px); color: var(--muted); max-width: 44ch; margin: 0 auto 28px; font-weight: 600; }
-
+  .hero .lead { color: var(--muted); max-width: 40ch; margin: 0 auto 30px; }
   .btn {
-    display: inline-flex; align-items: center; gap: 9px;
-    background: var(--pink); color: #fff; font-weight: 800; font-size: 17px;
-    padding: 15px 30px; border-radius: 999px; border: none; cursor: pointer;
-    box-shadow: 0 12px 26px rgba(255,107,157,.4);
-    transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+    display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--paper);
+    font-family: var(--sans); font-size: 14.5px; font-weight: 600; padding: 11px 22px;
+    border-radius: 999px; border: none; cursor: pointer;
+    transition: transform .16s ease, opacity .16s ease;
   }
-  .btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 18px 34px rgba(255,107,157,.48); }
-  .btn .heart { font-size: 15px; }
-  .req { color: var(--muted); font-size: 13.5px; font-weight: 600; margin-top: 14px; }
+  .btn:hover { transform: translateY(-1px); opacity: .88; }
+  .meta { margin-top: 12px; }
 
-  /* Cute window frame around the product shot */
-  .window {
-    margin: 50px auto 0; max-width: 460px; width: 100%;
-    background: #fff; border-radius: 24px; padding: 12px;
-    box-shadow: 0 30px 60px rgba(255,107,157,.28), 0 0 0 1px rgba(0,0,0,.04);
-    transform: rotate(-1.2deg); position: relative;
+  /* Product shot — deliberately small, surrounded by air */
+  .shot { margin: 52px auto 0; max-width: 336px; width: 100%; }
+  .frame {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 9px;
+    box-shadow: 0 14px 34px rgba(38,36,31,.07);
   }
-  .window::before {
-    content: ""; position: absolute; top: 14px; left: 16px;
-    width: 34px; height: 8px; border-radius: 99px;
-    background: var(--pink); box-shadow: 14px 0 0 var(--peach), 28px 0 0 var(--mint);
+  .frame .dots { display: flex; gap: 4px; padding: 3px 4px 9px; }
+  .frame .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+  .frame img { width: 100%; display: block; border-radius: 10px; }
+  .shot .caption { text-align: center; margin-top: 12px; }
+
+  /* Spec strip */
+  .specs {
+    margin-top: 72px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(4, 1fr);
   }
-  .window img { width: 100%; display: block; border-radius: 14px; margin-top: 18px; }
+  .spec { padding: 20px 8px; text-align: center; border-left: 1px solid var(--line); }
+  .spec:first-child { border-left: none; }
+  .spec b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+  .spec span { display: block; margin-top: 3px; }
 
   /* Sections */
-  section.block { padding: 96px 0 24px; }
-  .eyebrow { color: var(--pink); font-weight: 800; font-size: 14px; margin-bottom: 10px; }
-  h2 { font-size: clamp(28px, 4.6vw, 44px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; color: #3f3540; }
-  .sub { color: var(--muted); font-size: clamp(15px, 2.1vw, 18px); max-width: 52ch; margin-top: 14px; font-weight: 600; }
+  section { padding: 84px 0; }
+  h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 600; letter-spacing: -0.022em; margin-top: 10px; }
+  .sectionsub { color: var(--muted); max-width: 46ch; margin-top: 10px; }
 
-  .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 52px; }
-  .fcard {
-    background: var(--card); border-radius: var(--radius); padding: 28px 26px;
-    box-shadow: 0 14px 30px rgba(160,141,149,.14); transition: transform .25s cubic-bezier(.34,1.4,.64,1);
+  .features {
+    margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
   }
-  .fcard:hover { transform: translateY(-5px); }
-  .emoji {
-    width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center;
-    font-size: 26px; margin-bottom: 16px;
-  }
-  .e-pink { background: var(--pink-soft); }
-  .e-mint { background: #d5f5ec; }
-  .e-peach { background: #ffeccf; }
-  .e-lav { background: #ece4fb; }
-  .fcard h3 { font-size: 19px; font-weight: 800; margin-bottom: 7px; color: #3f3540; }
-  .fcard p { color: var(--muted); font-size: 14.5px; font-weight: 600; }
+  .feature { background: var(--card); padding: 26px 24px; }
+  .feature svg { width: 18px; height: 18px; color: var(--accent); display: block; margin-bottom: 14px; }
+  .feature h3 { font-size: 15px; font-weight: 600; margin-bottom: 5px; letter-spacing: -0.01em; }
+  .feature p { color: var(--muted); font-size: 14px; }
 
-  .showcase { margin-top: 48px; text-align: center; }
-  .showcase .frame {
-    display: inline-block; background: #fff; padding: 16px; border-radius: 28px;
-    box-shadow: 0 20px 44px rgba(160,141,149,.18); transform: rotate(1deg);
-  }
-  .showcase img { width: 100%; max-width: 680px; border-radius: 16px; display: block; }
+  /* Showcase */
+  .showcase { margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+  .showcase img { width: 100%; display: block; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; }
+  .legend span { color: var(--muted); font-size: 13.5px; }
+  .legend b { color: var(--ink); font-weight: 600; }
 
-  /* Final CTA */
-  .final { text-align: center; padding: 100px 24px 90px; position: relative; }
-  .final-card {
-    max-width: 760px; margin: 0 auto; background: linear-gradient(135deg, var(--pink-soft), var(--sky));
-    border-radius: 34px; padding: 60px 30px;
-    box-shadow: 0 26px 60px rgba(255,107,157,.22);
-  }
-  .final h2 { margin-bottom: 8px; }
-  .final .tagline { margin-bottom: 22px; }
+  /* Closing */
+  .close { text-align: center; padding: 96px 0 88px; border-top: 1px solid var(--line); }
+  .close h2 { max-width: 18ch; margin: 10px auto 22px; }
 
-  footer { padding: 40px 0 56px; color: var(--muted); font-size: 13px; font-weight: 600; }
-  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-  .foot a:hover { color: var(--pink); }
+  footer { border-top: 1px solid var(--line); padding: 26px 0 44px; }
+  .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 
-  /* Motion */
-  @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
-  @keyframes twinkle { 0%,100% { opacity: .25; transform: scale(.85) } 50% { opacity: .7; transform: scale(1.1) } }
-  @keyframes rise { from { opacity: 0; transform: translateY(22px) } to { opacity: 1; transform: none } }
-  .hero .chip, .hero .tagline, .hero h1, .hero p.lead, .hero .actions, .hero .req, .window {
-    animation: rise .8s cubic-bezier(.2,.7,.2,1) both;
+  /* Motion — two restrained moves: hero entrance, scroll reveal */
+  @keyframes rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+  .hero .micro, .hero h1, .hero .lead, .hero .actions, .hero .meta, .shot {
+    animation: rise .7s cubic-bezier(.2,.7,.2,1) both;
   }
-  .hero .tagline { animation-delay: .05s } .hero h1 { animation-delay: .1s } .hero p.lead { animation-delay: .16s }
-  .hero .actions { animation-delay: .22s } .hero .req { animation-delay: .26s } .window { animation-delay: .3s }
+  .hero h1 { animation-delay: .04s } .hero .lead { animation-delay: .09s }
+  .hero .actions { animation-delay: .14s } .hero .meta { animation-delay: .18s } .shot { animation-delay: .22s }
   .reveal { opacity: 1; }
-  .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .55s ease; }
   .js .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
     .js .reveal { opacity: 1; transform: none; }
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 700px) {
     .features { grid-template-columns: 1fr; }
-    section.block { padding: 72px 0 20px; }
-    .b1,.b2,.b3 { display: none; }
+    .specs { grid-template-columns: 1fr 1fr; }
+    .spec:nth-child(3) { border-left: none; }
+    .spec:nth-child(3), .spec:nth-child(4) { border-top: 1px solid var(--line); }
+    section { padding: 64px 0; }
+    .hero { padding-top: 62px; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="wrap nav">
-    <div class="brand"><span class="mark"></span> Calendar Bar</div>
-    <a class="pill-link" href="#download">Download</a>
+  <div class="nav">
+    <span class="brand"><span class="mark"></span> Calendar Bar</span>
+    <span class="micro">1.0</span>
+    <span class="spacer"></span>
+    <a class="textlink" href="#download">Download</a>
   </div>
 </header>
 
-<!-- Hero -->
 <div class="hero">
-  <div class="hero-bg"></div>
-  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
-  <span class="sparkle" style="top:150px;left:24%;font-size:22px">✦</span>
-  <span class="sparkle" style="top:110px;right:30%;font-size:16px;animation-delay:1s">✦</span>
-  <span class="sparkle" style="top:300px;left:14%;font-size:14px;animation-delay:1.6s">✧</span>
-
   <div class="wrap">
-    <span class="chip">cute · tiny · calendar ✿</span>
-    <p class="tagline">a little calendar for your menu bar ♡</p>
+    <p class="micro">Menu bar utility · macOS</p>
     <h1>Click the date.<br>See the month.</h1>
-    <p class="lead">A simple, cute little calendar that lives in your Mac menu bar. No events, no accounts — just tap the date and there's your month. ♡</p>
+    <p class="lead">A tiny, native monthly calendar that lives in your menu bar. No events, no accounts, no network.</p>
     <div class="actions" id="download">
-      <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">
-        <span class="heart">♥</span> Download for macOS
-      </a>
+      <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download for macOS</a>
     </div>
-    <p class="req">Free · macOS 14 Sonoma or later · Apple Silicon &amp; Intel</p>
+    <p class="micro meta">Free · macOS 14+ · Apple Silicon &amp; Intel</p>
 
-    <div class="window">
-      <img src="assets/popover.png?v=2" alt="Calendar Bar's monthly calendar popover">
+    <div class="shot">
+      <div class="frame">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <img src="assets/popover.png?v=2" alt="The Calendar Bar popover showing a month grid with today highlighted">
+      </div>
+      <p class="micro caption">300 × 300 pt, and that's the whole app</p>
+    </div>
+
+    <div class="specs">
+      <div class="spec"><b>26 MB</b><span class="micro">memory</span></div>
+      <div class="spec"><b>~0%</b><span class="micro">idle cpu</span></div>
+      <div class="spec"><b>228 KB</b><span class="micro">download</span></div>
+      <div class="spec"><b>0</b><span class="micro">permissions</span></div>
     </div>
   </div>
 </div>
 
-<!-- Features -->
-<section class="block">
+<section>
   <div class="wrap reveal">
-    <div class="eyebrow">what's inside</div>
-    <h2>Everything you need.<br>Nothing you don't.</h2>
-    <p class="sub">Like the Windows taskbar calendar, but native — and a lot cuter — on your Mac.</p>
+    <p class="micro">What's inside</p>
+    <h2>Everything you need. Nothing you don't.</h2>
+    <p class="sectionsub">Like the Windows taskbar calendar, but native to the Mac — and small enough to forget it's there.</p>
 
     <div class="features">
-      <div class="fcard">
-        <div class="emoji e-pink">🗓️</div>
-        <h3>Lives in your menu bar</h3>
-        <p>One tap opens the month. Today is highlighted, and you can hop around with arrows, scroll, trackpad swipe, or the keyboard.</p>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        <h3>Lives in the menu bar</h3>
+        <p>One click opens the month. Today is highlighted. Move around with arrows, scroll, trackpad swipe, or the keyboard.</p>
       </div>
-      <div class="fcard">
-        <div class="emoji e-mint">🎨</div>
-        <h3>Make it yours</h3>
-        <p>Show the date, weekday, or a tear-off calendar icon — in seven shapes and ten colors. Pick your language, too.</p>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>
+        <h3>Set it how you like</h3>
+        <p>Show the date, the weekday, or a tear-off calendar icon — seven shapes, ten colours, eight languages.</p>
       </div>
-      <div class="fcard">
-        <div class="emoji e-peach">🔒</div>
-        <h3>Private by design</h3>
-        <p>No accounts, no analytics, no network. It never touches your calendars, contacts, or location. Everything stays on your Mac.</p>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v6c0 4.4-2.9 7.4-7 9-4.1-1.6-7-4.6-7-9V6z"/></svg>
+        <h3>Nothing leaves your Mac</h3>
+        <p>No accounts, no analytics, no network requests. It never asks for your calendars, contacts, or location.</p>
       </div>
-      <div class="fcard">
-        <div class="emoji e-lav">⚡</div>
-        <h3>Light &amp; native</h3>
-        <p>Built with Swift &amp; AppKit. Under 30&nbsp;MB of memory, no Dock icon, and basically zero CPU while it waits.</p>
+      <div class="feature">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M13 3l-8 11h6l-1 7 8-11h-6z"/></svg>
+        <h3>Quiet by default</h3>
+        <p>Swift and AppKit, no Dock icon, no background chatter. Starts with your Mac, then stays out of the way.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Showcase -->
-<section class="block">
-  <div class="wrap reveal" style="text-align:center">
-    <div class="eyebrow" style="text-align:center">seven little styles</div>
-    <h2>A little calendar, seven ways.</h2>
-    <div class="showcase">
-      <div class="frame"><img src="assets/styles.png?v=2" alt="The daily calendar icon in seven cute styles and colors"></div>
-    </div>
-  </div>
-</section>
-
-<!-- Final CTA -->
-<div class="final">
+<section style="padding-top:0">
   <div class="wrap reveal">
-    <div class="final-card">
-      <p class="tagline">no setup, no sign-in ♡</p>
-      <h2>Your calendar,<br>one click away.</h2>
-      <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg"><span class="heart">♥</span> Download for macOS</a>
-      <p class="req" style="color:#8a6b78">Free · macOS 14 Sonoma or later</p>
+    <p class="micro">Menu bar styles</p>
+    <h2>Seven ways to show a date.</h2>
+    <div class="showcase">
+      <img src="assets/styles.png?v=3" alt="The daily calendar icon drawn in seven styles">
     </div>
+    <div class="legend">
+      <span><b>Classic</b> banner</span>
+      <span><b>Circle</b> badge</span>
+      <span><b>Minimal</b> plain</span>
+      <span><b>Weekday</b> left or right</span>
+      <span><b>Torn</b> page</span>
+      <span><b>Peek</b> stack</span>
+    </div>
+  </div>
+</section>
+
+<div class="close">
+  <div class="wrap reveal">
+    <p class="micro">One click away</p>
+    <h2>Put the month back in your menu bar.</h2>
+    <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download for macOS</a>
+    <p class="micro meta">Signed and notarised by Apple · Free</p>
   </div>
 </div>
 
 <footer>
   <div class="wrap foot">
-    <span>© 2026 supersalt studio ✿</span>
-    <span>Calendar Bar 1.0 · <a href="https://github.com/dennykim123/calendar-bar/releases">Releases</a></span>
+    <span class="micro">© 2026 supersalt studio</span>
+    <span class="micro"><a href="https://github.com/dennykim123/calendar-bar/releases">Releases</a></span>
   </div>
 </footer>
 
@@ -286,8 +258,8 @@
   const reveals = document.querySelectorAll('.reveal');
   const revealAll = () => reveals.forEach(el => el.classList.add('in'));
   if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
     reveals.forEach(el => io.observe(el));
     setTimeout(revealAll, 1400);
