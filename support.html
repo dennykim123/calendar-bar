@@ -85,6 +85,20 @@
   .copy:hover { opacity: .85; }
   .copy.done { background: var(--accent); }
 
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+  .tier {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    border: 1px solid var(--line); border-radius: 12px; padding: 14px 8px;
+    text-decoration: none; transition: border-color .15s ease, transform .15s ease;
+  }
+  .tier:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .tier b { font-size: 19px; font-weight: 600; }
+  .tier span { font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--faint); }
+  .tier.mid { border-color: var(--accent); }
+  .tier.mid span { color: var(--accent); }
+  @media (max-width: 520px) { .tiers { grid-template-columns: 1fr; } }
+
   .paybtn {
     display: inline-flex; align-items: center; background: var(--ink); color: var(--paper);
     font-size: 14.5px; font-weight: 600; padding: 11px 22px; border-radius: 999px;
@@ -160,6 +174,39 @@
 </div>
 
 <div class="wrap">
+
+  <section class="reveal">
+    <h2>Pay by card</h2>
+    <p class="sectionsub">The simplest one. Handled by Paddle, our reseller — including tax and receipts.</p>
+
+    <div class="method">
+      <div class="mhead"><h2 style="font-size:15px">Supporter license</h2><span class="tag">card</span></div>
+      <p class="note" style="margin-top:6px">Pick any amount — they all unlock the same
+        extras. One payment, no subscription. A supporter code arrives by email within a day.</p>
+
+      <div class="tiers">
+      </div>
+
+      <div class="cards">
+        <span>VISA</span><span>MASTERCARD</span><span>AMEX</span>
+        <span>APPLE PAY</span><span>GOOGLE PAY</span><span>PAYPAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- needs:btc -->
+  <section class="reveal">
+    <h2>Card → Bitcoin</h2>
+    <p class="sectionsub">No wallet, no exchange account, no sign-up.</p>
+
+    <div class="method">
+      <div class="mhead"><h2 style="font-size:15px">Azteco voucher</h2></div>
+      <ol class="steps">
+        <li>Buy an <a href="https://azte.co" target="_blank" rel="noopener">Azteco voucher</a> with any bank card.</li>
+        <li>Email the code to <a href="mailto:bluepisode@naver.com?subject=Calendar%20Bar%20support">bluepisode@naver.com</a>.</li>
+      </ol>
+    </div>
+  </section>
 
   <section class="reveal">
     <h2>Amazon gift card</h2>
