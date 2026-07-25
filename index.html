@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calendar Bar — a minimal calendar for your Mac menu bar</title>
-<meta name="description" content="Click the date. See the month. A minimal, native monthly calendar for your Mac menu bar. No events, no accounts, no network — for people who keep their menu bar clean.">
+<meta name="description" content="Click the date. See the month. A minimal, native monthly calendar for your Mac menu bar. No events, no accounts, no network.">
 <meta property="og:title" content="Calendar Bar">
 <meta property="og:description" content="Click the date. See the month. A minimal, native calendar for your Mac menu bar.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='23' rx='6' fill='white'/%3E%3Cpath d='M4 11a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v0H4z' fill='%23e5433c'/%3E%3Ctext x='16' y='25' font-size='14' font-family='Arial' font-weight='800' text-anchor='middle' fill='%2326241f'%3E24%3C/text%3E%3C/svg%3E">
@@ -17,8 +17,7 @@
     --faint:  #b3aea5;
     --line:   #e6e3dd;
     --accent: #e5433c;
-    --radius: 14px;
-    --maxw:   880px;
+    --maxw:   720px;
     --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
   }
@@ -29,132 +28,93 @@
     }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  html { -webkit-font-smoothing: antialiased; }
   body {
     font-family: var(--sans); background: var(--paper); color: var(--ink);
-    line-height: 1.6; font-size: 15px; overflow-x: hidden;
+    line-height: 1.6; font-size: 15px;
   }
   a { color: inherit; text-decoration: none; }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  .micro { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
 
-  /* micro label — the "small and precise" voice of the page */
-  .micro {
-    font-family: var(--mono); font-size: 11px; letter-spacing: .09em;
-    text-transform: uppercase; color: var(--faint);
-  }
-
-  /* Header */
-  header { border-bottom: 1px solid var(--line); background: var(--paper); position: sticky; top: 0; z-index: 20; }
-  .nav { display: flex; align-items: center; gap: 10px; height: 54px; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+  /* Header — holds the only persistent call to action */
+  header { border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--paper); z-index: 10; }
+  .nav { display: flex; align-items: center; height: 56px; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
   .brand { display: flex; align-items: center; gap: 9px; font-weight: 600; letter-spacing: -0.01em; }
   .mark {
     width: 19px; height: 16px; border-radius: 4px; background: #fff; flex: none;
-    position: relative; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.10);
+    position: relative; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.10);
   }
   .mark::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 38%; background: var(--accent); }
-  .mark::after {
-    content: "24"; position: absolute; inset: 38% 0 0 0; display: grid; place-items: center;
-    font: 700 8px/1 var(--sans); color: #26241f;
+  .mark::after { content: "24"; position: absolute; inset: 38% 0 0 0; display: grid; place-items: center;
+    font: 700 8px/1 var(--sans); color: #26241f; }
+  .nav .btn { margin-left: auto; }
+  .btn {
+    display: inline-flex; align-items: center; background: var(--ink); color: var(--paper);
+    font-size: 13.5px; font-weight: 600; padding: 8px 17px; border-radius: 999px;
+    transition: opacity .15s ease;
   }
-  .nav .spacer { flex: 1; }
-  .textlink { font-size: 14px; color: var(--muted); }
-  .textlink:hover { color: var(--ink); }
+  .btn:hover { opacity: .85; }
+  .btn.lg { font-size: 15px; padding: 12px 24px; }
 
   /* Hero */
-  .hero { padding: 86px 0 0; text-align: center; }
-  .hero h1 {
-    font-size: clamp(30px, 5.2vw, 46px); font-weight: 600; letter-spacing: -0.032em;
-    line-height: 1.08; margin: 14px auto 16px; max-width: 15ch;
-  }
-  .hero .lead { color: var(--muted); max-width: 40ch; margin: 0 auto 30px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--paper);
-    font-family: var(--sans); font-size: 14.5px; font-weight: 600; padding: 11px 22px;
-    border-radius: 999px; border: none; cursor: pointer;
-    transition: transform .16s ease, opacity .16s ease;
-  }
-  .btn:hover { transform: translateY(-1px); opacity: .88; }
-  .meta { margin-top: 12px; }
+  .hero { text-align: center; padding: 88px 0 0; }
+  h1 { font-size: clamp(31px, 5.4vw, 44px); font-weight: 600; letter-spacing: -0.033em;
+    line-height: 1.08; max-width: 15ch; margin: 0 auto 16px; }
+  .lead { color: var(--muted); max-width: 38ch; margin: 0 auto 28px; }
+  .req { margin-top: 12px; }
 
-  /* Product shot — deliberately small, surrounded by air */
-  .shot { margin: 52px auto 0; max-width: 336px; width: 100%; }
-  .frame {
-    background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 9px;
-    box-shadow: 0 14px 34px rgba(38,36,31,.07);
+  .shot { margin: 54px auto 0; max-width: 320px; }
+  .shot img {
+    width: 100%; display: block; border-radius: 13px; border: 1px solid var(--line);
+    box-shadow: 0 12px 30px rgba(38,36,31,.07);
   }
-  .frame .dots { display: flex; gap: 4px; padding: 3px 4px 9px; }
-  .frame .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
-  .frame img { width: 100%; display: block; border-radius: 10px; }
-  .shot .caption { text-align: center; margin-top: 12px; }
 
-  /* Spec strip */
-  .specs {
-    margin-top: 72px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  /* Facts */
+  .facts {
+    margin-top: 76px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
     display: grid; grid-template-columns: repeat(4, 1fr);
   }
-  .spec { padding: 20px 8px; text-align: center; border-left: 1px solid var(--line); }
-  .spec:first-child { border-left: none; }
-  .spec b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
-  .spec span { display: block; margin-top: 3px; }
+  .fact { padding: 18px 6px; text-align: center; border-left: 1px solid var(--line); }
+  .fact:first-child { border-left: none; }
+  .fact b { display: block; font-size: 16px; font-weight: 600; }
+  .fact span { display: block; margin-top: 2px; }
 
-  /* Sections */
-  section { padding: 84px 0; }
-  h2 { font-size: clamp(21px, 3vw, 27px); font-weight: 600; letter-spacing: -0.022em; margin-top: 10px; }
-  .sectionsub { color: var(--muted); max-width: 46ch; margin-top: 10px; }
+  /* Body sections */
+  section { padding: 76px 0 0; }
+  h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.018em; }
 
-  .features {
-    margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-    background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  .list { margin-top: 22px; border-top: 1px solid var(--line); }
+  .row { display: flex; gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+  .row b { font-weight: 600; min-width: 168px; flex: none; }
+  .row span { color: var(--muted); }
+
+  .showcase { margin-top: 22px; }
+  .showcase img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 12px; }
+
+  .omit { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 7px; }
+  .omit s {
+    font-family: var(--mono); font-size: 11.5px; color: var(--faint);
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; background: var(--card);
   }
-  .feature { background: var(--card); padding: 26px 24px; }
-  .feature svg { width: 18px; height: 18px; color: var(--accent); display: block; margin-bottom: 14px; }
-  .feature h3 { font-size: 15px; font-weight: 600; margin-bottom: 5px; letter-spacing: -0.01em; }
-  .feature p { color: var(--muted); font-size: 14px; }
 
-  /* Showcase */
-  .showcase { margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--card); }
-  .showcase img { width: 100%; display: block; }
-  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; }
-  .legend span { color: var(--muted); font-size: 13.5px; }
-  .legend b { color: var(--ink); font-weight: 600; }
-
-  /* Omissions — non-goals, stated plainly */
-  .omit { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 8px; }
-  .omit span {
-    font-family: var(--mono); font-size: 11.5px; letter-spacing: .02em; color: var(--muted);
-    border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; background: var(--card);
-  }
-  .omit span s { color: var(--faint); text-decoration-thickness: 1px; }
-
-  /* Closing */
-  .close { text-align: center; padding: 96px 0 88px; border-top: 1px solid var(--line); }
-  .close h2 { max-width: 18ch; margin: 10px auto 22px; }
-
-  footer { border-top: 1px solid var(--line); padding: 26px 0 44px; }
+  footer { margin-top: 84px; border-top: 1px solid var(--line); padding: 24px 0 40px; }
   .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 
-  /* Motion — two restrained moves: hero entrance, scroll reveal */
-  @keyframes rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
-  .hero .micro, .hero h1, .hero .lead, .hero .actions, .hero .meta, .shot {
-    animation: rise .7s cubic-bezier(.2,.7,.2,1) both;
-  }
-  .hero h1 { animation-delay: .04s } .hero .lead { animation-delay: .09s }
-  .hero .actions { animation-delay: .14s } .hero .meta { animation-delay: .18s } .shot { animation-delay: .22s }
-  .reveal { opacity: 1; }
-  .js .reveal { opacity: 0; transform: translateY(12px); transition: opacity .55s ease, transform .55s ease; }
-  .js .reveal.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; }
-    .js .reveal { opacity: 1; transform: none; }
-  }
+  @keyframes rise { from { opacity: 0; transform: translateY(9px) } to { opacity: 1; transform: none } }
+  h1, .lead, .hero .btn, .req, .shot { animation: rise .65s cubic-bezier(.2,.7,.2,1) both; }
+  .lead { animation-delay: .05s } .hero .btn { animation-delay: .1s }
+  .req { animation-delay: .14s } .shot { animation-delay: .18s }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
-  @media (max-width: 700px) {
-    .features { grid-template-columns: 1fr; }
-    .specs { grid-template-columns: 1fr 1fr; }
-    .spec:nth-child(3) { border-left: none; }
-    .spec:nth-child(3), .spec:nth-child(4) { border-top: 1px solid var(--line); }
-    section { padding: 64px 0; }
+  @media (max-width: 640px) {
+    .facts { grid-template-columns: 1fr 1fr; }
+    .fact:nth-child(3) { border-left: none; }
+    .fact:nth-child(3), .fact:nth-child(4) { border-top: 1px solid var(--line); }
+    .row { flex-direction: column; gap: 2px; }
+    .row b { min-width: 0; }
     .hero { padding-top: 62px; }
+    section { padding-top: 60px; }
   }
 </style>
 </head>
@@ -163,122 +123,60 @@
 <header>
   <div class="nav">
     <span class="brand"><span class="mark"></span> Calendar Bar</span>
-    <span class="micro">1.0</span>
-    <span class="spacer"></span>
-    <a class="textlink" href="#download">Download</a>
+    <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download</a>
   </div>
 </header>
 
 <div class="hero">
   <div class="wrap">
-    <p class="micro">Minimal menu bar calendar · macOS</p>
     <h1>Click the date.<br>See the month.</h1>
-    <p class="lead">A minimal, native monthly calendar for people who keep their menu bar clean. No events, no accounts, no network.</p>
-    <div class="actions" id="download">
-      <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download for macOS</a>
-    </div>
-    <p class="micro meta">Free · macOS 14+ · Apple Silicon &amp; Intel</p>
+    <p class="lead">A minimal, native monthly calendar for people who keep their menu bar clean.</p>
+    <a class="btn lg" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download for macOS</a>
+    <p class="micro req">Free · macOS 14+ · Signed &amp; notarised by Apple</p>
 
     <div class="shot">
-      <div class="frame">
-        <div class="dots"><i></i><i></i><i></i></div>
-        <img src="assets/popover.png?v=2" alt="The Calendar Bar popover showing a month grid with today highlighted">
-      </div>
-      <p class="micro caption">300 × 300 pt, and that's the whole app</p>
+      <img src="assets/popover.png?v=2" alt="The Calendar Bar popover showing a month with today highlighted">
     </div>
 
-    <div class="specs">
-      <div class="spec"><b>26 MB</b><span class="micro">memory</span></div>
-      <div class="spec"><b>~0%</b><span class="micro">idle cpu</span></div>
-      <div class="spec"><b>228 KB</b><span class="micro">download</span></div>
-      <div class="spec"><b>0</b><span class="micro">permissions</span></div>
+    <div class="facts">
+      <div class="fact"><b>26 MB</b><span class="micro">memory</span></div>
+      <div class="fact"><b>~0%</b><span class="micro">idle cpu</span></div>
+      <div class="fact"><b>228 KB</b><span class="micro">download</span></div>
+      <div class="fact"><b>0</b><span class="micro">permissions</span></div>
     </div>
   </div>
 </div>
 
 <section>
-  <div class="wrap reveal">
-    <p class="micro">What's inside</p>
-    <h2>Everything you need. Nothing you don't.</h2>
-    <p class="sectionsub">Like the Windows taskbar calendar, but native to the Mac — and small enough to forget it's there.</p>
-
-    <div class="features">
-      <div class="feature">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
-        <h3>Lives in the menu bar</h3>
-        <p>One click opens the month. Today is highlighted. Move around with arrows, scroll, trackpad swipe, or the keyboard.</p>
-      </div>
-      <div class="feature">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>
-        <h3>Set it how you like</h3>
-        <p>Show the date, the weekday, or a tear-off calendar icon — eight shapes, thirteen colours, eight languages.</p>
-      </div>
-      <div class="feature">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v6c0 4.4-2.9 7.4-7 9-4.1-1.6-7-4.6-7-9V6z"/></svg>
-        <h3>Nothing leaves your Mac</h3>
-        <p>No accounts, no analytics, no network requests. It never asks for your calendars, contacts, or location.</p>
-      </div>
-      <div class="feature">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M13 3l-8 11h6l-1 7 8-11h-6z"/></svg>
-        <h3>Quiet by default</h3>
-        <p>Swift and AppKit, no Dock icon, no background chatter. Starts with your Mac, then stays out of the way.</p>
-      </div>
+  <div class="wrap">
+    <h2>What it does.</h2>
+    <div class="list">
+      <div class="row"><b>Opens in one click</b><span>Arrows, scroll, swipe, or the keyboard to move months.</span></div>
+      <div class="row"><b>Stays out of the way</b><span>No Dock icon, no notifications, nothing in the background.</span></div>
+      <div class="row"><b>Nothing leaves your Mac</b><span>No accounts, no analytics, no network requests.</span></div>
+      <div class="row"><b>Yours to set up</b><span>Eight icon shapes, thirteen colours, eight languages.</span></div>
     </div>
   </div>
 </section>
 
-<section style="padding-top:0">
-  <div class="wrap reveal">
-    <p class="micro">Menu bar styles</p>
+<section>
+  <div class="wrap">
     <h2>Eight ways to show a date.</h2>
-    <p class="sectionsub">By default it's a single number — as little as a menu bar can show. Or pick a tear-off calendar icon in eight shapes and thirteen colours.</p>
     <div class="showcase">
       <img src="assets/styles.png?v=4" alt="The daily calendar icon drawn in eight styles">
     </div>
-    <div class="legend">
-      <span><b>Classic</b> banner</span>
-      <span><b>Circle</b> badge</span>
-      <span><b>Minimal</b> plain</span>
-      <span><b>Weekday</b> left or right</span>
-      <span><b>Spring</b> binding</span>
-      <span><b>Torn</b> page</span>
-      <span><b>Peek</b> stack</span>
-    </div>
   </div>
 </section>
 
-<section style="padding-top:0">
-  <div class="wrap reveal">
-    <p class="micro">Deliberately missing</p>
+<section>
+  <div class="wrap">
     <h2>What it doesn't do.</h2>
-    <p class="sectionsub">Every one of these was considered and left out. The question was always the same: does it make checking the month faster?</p>
     <div class="omit">
-      <span><s>event lists</s></span>
-      <span><s>calendar sync</s></span>
-      <span><s>accounts</s></span>
-      <span><s>reminders</s></span>
-      <span><s>notifications</s></span>
-      <span><s>weather</s></span>
-      <span><s>to-dos</s></span>
-      <span><s>AI</s></span>
-      <span><s>widgets</s></span>
-      <span><s>analytics</s></span>
-      <span><s>ads</s></span>
-      <span><s>dock icon</s></span>
-      <span><s>week numbers</s></span>
-      <span><s>subscriptions</s></span>
+      <s>events</s><s>sync</s><s>accounts</s><s>reminders</s><s>notifications</s>
+      <s>weather</s><s>widgets</s><s>analytics</s><s>ads</s><s>subscriptions</s>
     </div>
   </div>
 </section>
-
-<div class="close">
-  <div class="wrap reveal">
-    <p class="micro">One click away</p>
-    <h2>Put the month back in your menu bar.</h2>
-    <a class="btn" href="https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg">Download for macOS</a>
-    <p class="micro meta">Signed and notarised by Apple · Free</p>
-  </div>
-</div>
 
 <footer>
   <div class="wrap foot">
@@ -287,17 +185,5 @@
   </div>
 </footer>
 
-<script>
-  document.documentElement.classList.add('js');
-  const reveals = document.querySelectorAll('.reveal');
-  const revealAll = () => reveals.forEach(el => el.classList.add('in'));
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((es) => {
-      for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
-    reveals.forEach(el => io.observe(el));
-    setTimeout(revealAll, 1400);
-  } else { revealAll(); }
-</script>
 </body>
 </html>
