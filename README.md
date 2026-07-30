@@ -9,7 +9,7 @@ No events, no accounts, no network.
 
 [![Download](https://img.shields.io/badge/Download-.dmg%20·%20324%20KB-e5433c?style=for-the-badge)](https://github.com/dennykim123/calendar-bar/releases/latest/download/Calendar-Bar-1.0.dmg)
 
-![macOS 14+](https://img.shields.io/badge/macOS-14%2B-1d1d1f) ![Apple Silicon & Intel](https://img.shields.io/badge/Apple%20Silicon-%26%20Intel-1d1d1f) ![Notarised by Apple](https://img.shields.io/badge/Signed%20%26%20notarised-by%20Apple-1d1d1f) ![Free](https://img.shields.io/badge/Price-Free-1d1d1f)
+macOS 14+  ·  Apple Silicon &amp; Intel  ·  Signed &amp; notarised by Apple  ·  Free
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.png">
